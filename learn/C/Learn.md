@@ -1,3 +1,4 @@
+[SoloLearn-c](https://www.sololearn.com/Play/C)
 # 基本概念
 
 ## 1.Hello, World!
@@ -21,7 +22,16 @@ char：单个字符。
 
 常量 
 - 在变量声明中使用**const** `const double PI = 3.14;` [1618](https://code.sololearn.com/1618/#c)
-- [使用#define预处理程序指令](https://code.sololearn.com/1635/#c)
+- 使用#define预处理程序指令 `#define PI 3.14` [1635](https://code.sololearn.com/1635/#c)
+
+## 输入输出
+1. 输入
+```
+char a = getchar();
+printf("你输入: %c", a);
+```
+> 仅单字符串
+
 
 
 # %d
