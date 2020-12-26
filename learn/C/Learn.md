@@ -1,183 +1,207 @@
 # 基本概念
 
-## 1.Hello, World!
-
 ```c
 #include <stdio.h>
-
 int main() {
-  printf("Hello, World!\n");
-  return 0;
+    printf("Hello, World!\n");
+    return 0;
 }
 ```
 
-## 类型
+## 数据类型
 
-```
-int： 整数。%d
-float：浮点数，带小数的数字。%f
-double：双精度浮点值。
-char：单个字符。每种类型所需的存储量因平台而异。%c
-```
+**int：**整数，整数。
+**float：**浮点数，带小数部分的数字。
+**double：**双精度浮点值。
+**char：**单个字符。 每种类型所需的存储量因平台而异。
 
+C没有布尔类型
 
-变量 必须以字母或下划线开头,可以由字母，数字和下划线字符组成
+### 变量
 
-常量
+通常使用带下划线的小写字母来分隔单词
 
-- 在变量声明中使用**const** `const double PI = 3.14;`
-- 使用#define预处理程序指令 `#define PI 3.14` 
+### 常量
 
-```c
-//d 十进制 ％ld 格式说明符 c 字符 s 字符串 f 浮点数 e 科学计数法 x 十六进制
-printf("Color: %s, Number: %d, float: %5.2f \n", "red", 42, 3.14159);
-```
+- 定义常量的一种方法是在变量声明中使用**const**关键字
+
+  ```c
+  int main{ const double PI = 3.14; }
+  ```
+
+- 使用**#define**预处理程序指令
+
+  ```c
+  #define PI 3.14
+  ```
 
 ## 输入输出
 
-1. 输入
+### Input
 
-```
+**getchar()**返回下一个**单个字符**输入的值 
+
+```c
 char a = getchar();
-printf("你输入: %c", a);
 ```
 
-> 仅单字符串
-
-
-
-
-
-# 输入项
-
-C支持多种方式来接受用户输入。
-**getchar（）**返回下一个单个字符输入的值。
-
-**例如**：
+gets()函数用于将输入读取为字符的有序序列，也称为字符串(string)。
 
 ```c
-#include <stdio.h>
+char a[100];
+gets(a); 
+```
 
-int main() {
-    char a = getchar();
+scanf()扫描与格式说明符匹配的输入
 
-    printf("You entered: %c", a);
+```c
+scanf("%d", &a);
+scanf("%d %d", &a, &b);
+```
 
-    return 0;
+> **scanf()**遇到空格后立即停止读取，因此“ Hello World”之类的文本是**scanf()**的两个单独输入。
+>
+> 必须使用＆来访问变量地址。**字符串不需要＆**，因为字符串名称充当指针。
+
+### Output
+
+**putchar()**输出单个字符
+
+```c
+char a = getchar();
+printf("You entered: ");
+putchar(a);
+```
+
+puts()函数用于将输出显示为字符串。
+
+```c
+gets(a); 
+printf("You entered: ");
+puts(a); 
+```
+
+**scanf()**扫描与格式说明符匹配的输入。
+
+### 格式化输入
+
+格式说明符以百分号％开头，用于将值分配给控制字符串后的相应参数。空白，制表符和换行符将被忽略。
+
+```
+%d十进制 %c字符 %s字符串 %f浮点数 %x十六进制 (<del>e科学计数法</)
+```
+### 格式化输出
+
+```
+\n新行 \t水平制表符 \\反斜杠 \b退格键 \'单引号 \“双引号
+```
+
+要打印％符号，请在格式字符串中使用%%
+
+%4.2f 指示浮点数将被打印在至少4个字符宽且2个小数位的空格中
+
+## 评论
+
+```c
+printf("this is a comments"); //comments
+/*comments*/ 
+```
+
+## 算数
+
++（加法），-（减法），*（乘法），/（除法）和％（模数除法）
+
+### 优先级
+
+```
+()   /*%   +-
+```
+
+### 赋值运算符
+
+```c
+x+=1; //x=x+1 +-*/%都适用
+x+=3*2; //x=x+(3*2)
+    
+x=z--; //x=z,z--
+x=++y; //y++,x=y
+```
+
+```c
+有六个关系运算符可用于形成布尔表达式，该表达式返回true或false
+ 计算结果为非零值的表达式被视为true。
+<小于
+<=小于或等于
+>大于
+> =大于或等于
+==等于
+!=不等于
+```
+
+
+
+# 条件和循环
+
+## 有条件的
+
+### if语句
+
+```c
+if(表达式){
+    语句;
+}//单个时，{}可不加,一般不加
+```
+
+### if-else语句
+
+该**if**语句可以包含一个可选的**else**条款，执行语句时表达式是**false**
+
+```c
+if()
+    语句;
+else
+    语句;
+```
+
+### 条件表达式
+
+```c
+y=(x>=5)?5:x;
+	if  ?对:错;
+可嵌套 y=(x>=5)?(x>=10)?10:x:x;
+/* 相当于
+if(x>=5)
+	y=5;
+else
+	y=x;
+*/
+```
+
+## 嵌套if语句
+
+```c
+if()
+    if()
+        x=5;
+	else
+        x=8;
+```
+
+适当地缩进嵌套的语句将有助于向读者阐明含义。但是，请确保理解，**if**使用花括号{}来更改关联，否则**else**语句与**最接近**的关联。
+
+```c
+if(){
+    if()
+        x=5;
 }
+else
+        x=8;
 ```
 
-输入存储在变量**a中**。 的**获取（）**函数是用来读输入为有序的字符序列，也被称为**串**。 字符串存储在char数组中。
+### if-else if语句
 
-```c
-#include <stdio.h>
+可以有多个**else if**子句，而last **else**语句是可选的
 
-int main() {
-    char a[100];
+开发**if-else if**语句时，请仔细考虑所涉及的逻辑。程序流分支到与第一个true表达式关联的语句，其余的任何一个都不进行测试。
 
-    gets(a); 
-
-    printf("You entered: %s", a);
-
-    return 0;
-}
-```
-
-在这里，我们将输入存储在100个字符的数组中。 **scanf（）**扫描与格式说明符匹配的输入。
-
-```c
-#include <stdio.h>
-
-int main() {
-    int a;
-    scanf("%d", &a);
-
-    printf("You entered: %d", a);
-
-    return 0;
-}
-```
-
-在**与**变量名前标志是**地址运算符**。它给出了变量的地址或在内存中的位置。这是必需的，因为**scanf**将输入值放置在变量地址上。 作为另一个示例，让我们提示输入两个整数输入并输出它们的和：
-
-```c
-#include <stdio.h>
-
-int main() {
-    int a, b;
-    printf("Enter two numbers:");
-    scanf("%d %d", &a, &b);
-
-    printf("\nSum: %d", a+b);
-
-    return 0;
-}
-```
-
->  **scanf（）**遇到空格后立即停止读取，因此“ Hello World”之类的文本是**scanf（）的**两个单独输入。
-
-# 输出
-
-在前面的课程中，我们已经使用过**printf（）**函数生成输出。在本课程中，我们将介绍可用于输出的其他几个功能。 **putchar（）**输出单个字符。
-
-```c
-#include <stdio.h>
-int main() {
-  char a = getchar();
-  printf("You entered: ");
-  putchar(a);
-  return 0;
-}
-```
-
-输入存储在变量**a中**。 该**puts（）**函数是用来显示输出作为**字符串**。 字符串存储在char数组中。
-
-```c
-#include <stdio.h>
-
-int main() {
-  char a[100];
-
-  gets(a); 
-
-  printf("You entered: ");
-  puts(a); 
-
-  return 0;
-} 
-```
-
-在这里，我们将输入存储在100个字符的数组中。 **scanf（）**扫描与格式说明符匹配的输入。
-
-```c
-#include <stdio.h>
-
-int main() {
-    int a;
-    scanf("%d", &a);
-
-    printf("You entered: %d", a);
-
-    return 0;
-}
-```
-
-在**与**变量名前标志是**地址运算符**。它给出了变量的地址或在内存中的位置。这是必需的，因为**scanf**将输入值放置在变量地址上。 作为另一个示例，让我们提示输入两个整数输入并输出它们的和：
-
-```c
-#include <stdio.h>
-
-int main() {
-    int a, b;
-    printf("Enter two numbers:");
-    scanf("%d %d", &a, &b);
-
-    printf("\nSum: %d", a+b);
-
-    return 0;
-}
-```
-
->  **scanf（）**遇到空格后立即停止读取，因此“ Hello World”之类的文本是**scanf（）的**两个单独输入。
-
-
+>  如果可能，为了清楚起见，最好使用**if-else if**语句而不是嵌套的**if**语句。
